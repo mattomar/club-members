@@ -1,20 +1,19 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Signup from "../pages/signUp";
 
-  function App() {
-    const animals = ["Lion", "Cow", "Snake", "Lizard"];
-    const animalsList = animals.map((animal) => <li key={animal}>{animal}</li>)
-  
-    return (
-      <div>
-        <h1>Animals: </h1>
-        <ul>
-          {animalsList}
-        </ul>
+function App() {
+  return (
+    <Router>
+      <div className="app-container">
+        <Routes>
+          <Route path="/" element={<Signup />} />
+
+        </Routes>
       </div>
-    );
-  }
+    </Router>
+  );
+}
 
-  export default App;
+export default App;
 
-
- 
