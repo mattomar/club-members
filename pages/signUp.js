@@ -1,5 +1,6 @@
 import AuthForm from "../components/authForm";
 import React from "react";
+import { Link } from "react-router-dom";
 const Signup = () => {
   const handleSignup = async (e, { firstName, lastName, email, password }) => {
     e.preventDefault();
@@ -7,7 +8,7 @@ const Signup = () => {
     const userData = { firstName, lastName, email, password };
 
     try {
-        const response = await fetch("http://localhost:5004/api/auth/signup", { 
+        const response = await fetch("http://localhost:5005/api/auth/signup", { 
             method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -26,7 +27,14 @@ const Signup = () => {
     }
   };
 
-  return <AuthForm type="signup" onSubmit={handleSignup} />;
+  return (
+    <div>
+      <AuthForm type="signup" onSubmit={handleSignup} />
+      <p>
+        Already have an account? <Link to="/login">Login here</Link>
+      </p>
+    </div>
+  );
 };
 
 export default Signup;
