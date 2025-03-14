@@ -1,5 +1,6 @@
 import Signup from "../../pages/signUp";
 import Login from "../../pages/logIn";
+import HomePage from "../../pages/home";
 import React from "react";
 
 const routes = [
@@ -11,6 +12,12 @@ const routes = [
     path: "/login",
     element: <Login />,
   },
+
+  {
+    path: "/home",
+    element: <HomePage />
+
+  }
 ];
 
 export default routes;

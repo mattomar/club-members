@@ -9,7 +9,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5005/api/auth/login", {
+      const response = await fetch("http://localhost:5008/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -20,7 +20,7 @@ const Login = () => {
       if (response.ok) {
         console.log("Login successful:", data);
         localStorage.setItem("token", data.token); // Store token
-        navigate("/"); // Redirect to homepage
+        navigate("/home"); // Redirect to homepage
       } else {
         console.error("Login failed:", data.message);
       }
