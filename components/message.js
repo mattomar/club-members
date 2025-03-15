@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "./ui/button";
 import Input from "./ui/input";
+import "../src/styles/messageForm.css"
 import React from "react";
 export default function ClubMessageForm({ onSend }) { // ✅ Accept onSend as a prop
     const [content, setContent] = useState("");
