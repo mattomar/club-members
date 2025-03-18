@@ -20,7 +20,7 @@ const AuthPage = () => {
         <p className="toggle-link" onClick={() => setShowLogin(!showLogin)}>
           {showLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
         </p>
-        
+
         {/* Guest Access Button */}
         <button className="guest-access" onClick={handleGuestAccess}>
           Continue as Guest
@@ -31,13 +31,13 @@ const AuthPage = () => {
       <div className="auth-description">
         <h1 className="auth-title">Welcome to the <span>Exclusive Club</span></h1>
         <p className="auth-subtitle">A private space where members can post and interact.</p>
-        
+
         <div className="features">
           <h2>Access Levels</h2>
           <ul>
-            <li><span>👤 Guest Access:</span> View messages but cannot post or see timestamps.</li>
-            <li><span>📝 Member Access:</span> Post messages, view timestamps, and see usernames.</li>
-            <li><span>👑 Admin Privileges:</span> Manage messages, including deleting inappropriate posts.</li>
+            <li><span>👤 Guest Access:</span> View messages but cannot post or see timestamps or usernames.</li>
+            <li><span>📝 Member Access:</span> Post messages but cannot see timestamps or usernames. Unless their own</li>
+            <li><span>👑 Admin Privileges:</span> Manage messages including deleting inappropriate posts. And see all users and timestamps.</li>
           </ul>
         </div>
       </div>

@@ -1,36 +1,44 @@
 import AuthForm from "../components/authForm";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 const Signup = () => {
-  const handleSignup = async (e, { firstName, lastName, email, password }) => {
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); // 🔹 React Router navigation
+
+  const handleSignup = async (e, { firstName, lastName, email, password, adminKey }) => {
     e.preventDefault();
-
-    const userData = { firstName, lastName, email, password };
-
+    setError("");
+  
     try {
-        const response = await fetch("http://localhost:5008/api/auth/signup", { 
-            method: "POST",
+      const response = await fetch("http://localhost:5001/api/auth/signup", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({ firstName, lastName, email, password, adminKey }),
       });
-
+  
       const data = await response.json();
-
-      if (response.ok) {
-        console.log("Signup successful:", data);
-        // Redirect user to login or home page
-      } else {
-        console.error("Signup failed:", data.message);
+  
+      if (!response.ok) {
+        setError(data.message || "Signup failed.");
+        return;
       }
+  
+      console.log("Signup successful:", data);
+
+      // 🔹 Redirect user after successful signup
+      navigate("/login"); 
     } catch (error) {
-      console.error("Error:", error);
+      setError("Error connecting to the server.");
+      console.error(error);
     }
   };
 
   return (
     <div>
       <AuthForm type="signup" onSubmit={handleSignup} />
-
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      
     </div>
   );
 };

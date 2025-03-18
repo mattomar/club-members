@@ -53,20 +53,34 @@
     padding: 0;
   }
   
-  .features li {
+  .features ul {
+    list-style: none;
+    padding: 0;
+    text-align: left; /* Aligns text properly */
+}
+
+.features li {
     font-size: 1.1rem;
     margin: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .features li span {
+    display: grid;
+    grid-template-columns: 150px auto; /* Ensures icons + labels align */
+    align-items: start; /* Keeps multiline text aligned */
+    gap: 8px; /* Adds spacing between label and text */
+}
+
+.features li span {
     font-weight: bold;
     color: #007bff;
-    margin-right: 5px;
-  }
-  
+}
+
+input {
+  width: 100%; /* Ensures full width within container */
+  padding: 10px; /* Adjusts padding */
+  margin: 8px 0; /* Keeps uniform spacing */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box; /* Prevents extra width issues */
+}
   .toggle-link {
     cursor: pointer;
     color: #007bff;
@@ -96,4 +110,39 @@
 
 .guest-access:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+      flex-direction: column; /* Stack elements vertically */
+      justify-content: center;
+      align-items: center; /* FULLY CENTER */
+      height: auto;
+      padding: 40px 20px;
+  }
+
+  .auth-form-container {
+      max-width: 90%; /* Shrinks form width */
+      padding: 20px;
+      margin: 0 auto; /* Ensures perfect centering */
+  }
+
+  .auth-description {
+      max-width: 90%;
+      padding: 20px 10px;
+      text-align: center;
+  }
+}
+
+/* Further Adjustments for Extra Small Screens */
+@media (max-width: 480px) {
+  .auth-form-container {
+      max-width: 100%;
+      padding: 15px;
+  }
+
+  .auth-description {
+      max-width: 100%;
+      padding: 15px;
+  }
 }

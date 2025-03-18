@@ -6,9 +6,10 @@ const AuthForm = ({ type, onSubmit }) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [adminKey, setAdminKey] = useState(""); // 🔹 New field for optional admin key
 
   return (
-    <form onSubmit={(e) => onSubmit(e, { firstName, lastName, email, password })}>
+    <form onSubmit={(e) => onSubmit(e, { firstName, lastName, email, password, adminKey })}>
       <h2>{type === "signup" ? "Sign Up" : "Log In"}</h2>
 
       {type === "signup" && (
@@ -20,13 +21,18 @@ const AuthForm = ({ type, onSubmit }) => {
             onChange={(e) => setFirstName(e.target.value)} 
             required 
           />
-
           <input 
             type="text" 
             placeholder="Last Name" 
             value={lastName} 
             onChange={(e) => setLastName(e.target.value)} 
             required 
+          />
+          <input 
+            type="text" 
+            placeholder="Admin Key (Optional)" 
+            value={adminKey} 
+            onChange={(e) => setAdminKey(e.target.value)} 
           />
         </>
       )}
@@ -38,7 +44,6 @@ const AuthForm = ({ type, onSubmit }) => {
         onChange={(e) => setEmail(e.target.value)} 
         required 
       />
-
       <input 
         type="password" 
         placeholder="Password" 
