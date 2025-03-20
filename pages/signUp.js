@@ -1,31 +1,33 @@
 import AuthForm from "../components/authForm";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [error, setError] = useState(""); // State for error message
-  const navigate = useNavigate();
+const Signup = () => {
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); // 🔹 React Router navigation
 
-  const handleLogin = async (e, { email, password }) => {
+  const handleSignup = async (e, { firstName, lastName, email, password, adminKey }) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
-
+    setError("");
+  
     try {
-      const response = await fetch("https://club-members-server-production.up.railway.app/api/auth/login", {
+      const response = await fetch("https://club-members-server-production.up.railway.app/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ firstName, lastName, email, password, adminKey }),
       });
-
+  
       const data = await response.json();
-
-      if (response.ok) {
-        console.log("Login successful:", data);
-        localStorage.setItem("token", data.token);
-        navigate("/home");
-      } else {
-        setError(data.message || "Invalid email or password.");
+  
+      if (!response.ok) {
+        setError(data.message || "Signup failed.");
+        return;
       }
+  
+      console.log("Signup successful:", data);
+
+      // 🔹 Redirect user after successful signup
+      navigate("/login"); 
     } catch (error) {
       setError("Error connecting to the server.");
       console.error(error);
@@ -34,10 +36,11 @@ const Login = () => {
 
   return (
     <div>
-      <AuthForm type="login" onSubmit={handleLogin} />
+      <AuthForm type="signup" onSubmit={handleSignup} />
       {error && <p style={{ color: "red" }}>{error}</p>}
+      
     </div>
   );
 };
 
-export default Login;
+export default Signup;
