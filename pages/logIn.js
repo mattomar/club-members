@@ -1,17 +1,15 @@
 import AuthForm from "../components/authForm";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [error, setError] = useState(""); // State for error message
   const navigate = useNavigate();
 
   const handleLogin = async (e, { email, password }) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
 
     try {
-      const response = await fetch("https://club-members-server-production.up.railway.app/api/auth/login", {
+      const response = await fetch("http://localhost:5001/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -21,23 +19,18 @@ const Login = () => {
 
       if (response.ok) {
         console.log("Login successful:", data);
-        localStorage.setItem("token", data.token);
-        navigate("/home");
+        localStorage.setItem("token", data.token); // Store token
+        navigate("/home"); // Redirect to homepage
       } else {
-        setError(data.message || "Invalid email or password.");
+        console.error("Login failed:", data.message);
       }
     } catch (error) {
-      setError("Error connecting to the server.");
-      console.error(error);
+      console.error("Error:", error);
     }
   };
+  console.log("✅ Login Component Loaded!"); // Add this line
 
-  return (
-    <div>
-      <AuthForm type="login" onSubmit={handleLogin} />
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </div>
-  );
+  return <AuthForm type="login" onSubmit={handleLogin} />;
 };
 
 export default Login;
