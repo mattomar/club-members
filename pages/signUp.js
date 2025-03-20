@@ -1,33 +1,31 @@
 import AuthForm from "../components/authForm";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
-  const [error, setError] = useState("");
-  const navigate = useNavigate(); // 🔹 React Router navigation
+const Login = () => {
+  const [error, setError] = useState(""); // State for error message
+  const navigate = useNavigate();
 
-  const handleSignup = async (e, { firstName, lastName, email, password, adminKey }) => {
+  const handleLogin = async (e, { email, password }) => {
     e.preventDefault();
-    setError("");
-  
+    setError(""); // Clear previous errors
+
     try {
-      const response = await fetch("https://club-members-server-production.up.railway.app/api/auth/signup", {
+      const response = await fetch("https://club-members-server-production.up.railway.app/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, lastName, email, password, adminKey }),
+        body: JSON.stringify({ email, password }),
       });
-  
-      const data = await response.json();
-  
-      if (!response.ok) {
-        setError(data.message || "Signup failed.");
-        return;
-      }
-  
-      console.log("Signup successful:", data);
 
-      // 🔹 Redirect user after successful signup
-      navigate("/login"); 
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Login successful:", data);
+        localStorage.setItem("token", data.token);
+        navigate("/home");
+      } else {
+        setError(data.message || "Invalid email or password.");
+      }
     } catch (error) {
       setError("Error connecting to the server.");
       console.error(error);
@@ -36,11 +34,10 @@ const Signup = () => {
 
   return (
     <div>
-      <AuthForm type="signup" onSubmit={handleSignup} />
+      <AuthForm type="login" onSubmit={handleLogin} />
       {error && <p style={{ color: "red" }}>{error}</p>}
-      
     </div>
   );
 };
 
-export default Signup;
+export default Login;
