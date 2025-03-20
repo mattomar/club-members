@@ -31,23 +31,23 @@ export default function HomePage() {
 
     const fetchMessages = async () => {
         try {
-            const response = await fetch("http://localhost:5001/api/messages");
+            const response = await fetch("https://club-members-server-production.up.railway.app/api/messages");
             if (!response.ok) throw new Error("Failed to fetch messages");
-
+    
             const data = await response.json();
             setMessages(data);
         } catch (error) {
             console.error("Error fetching messages:", error);
         }
     };
-
+    
     const handleSendMessage = async (content) => {
         if (!user) return;
     
         const senderId = user.userId || user.id;
     
         try {
-            const response = await fetch("http://localhost:5001/api/messages", {
+            const response = await fetch("https://club-members-server-production.up.railway.app/api/messages", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -58,18 +58,17 @@ export default function HomePage() {
     
             if (!response.ok) throw new Error("Failed to send message");
     
-            // ✅ Instead of updating the array manually, re-fetch messages
-            fetchMessages(); 
+            fetchMessages();
         } catch (error) {
             console.error("Error sending message:", error);
         }
     };
-
+    
     const handleDeleteMessage = async (id) => {
         console.log(`Attempting to delete message with ID: ${id}`);
     
         try {
-            const response = await fetch(`http://localhost:5001/api/messages/${id}`, {
+            const response = await fetch(`https://club-members-server-production.up.railway.app/api/messages/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -81,7 +80,6 @@ export default function HomePage() {
     
             if (!response.ok) throw new Error(data.error || "Failed to delete");
     
-            // ✅ Update state and log the new messages array
             setMessages((prevMessages) => {
                 const updatedMessages = prevMessages.filter((msg) => msg.id !== id);
                 console.log("Updated messages after delete:", updatedMessages);

@@ -11,7 +11,7 @@ const Signup = () => {
     setError("");
   
     try {
-      const response = await fetch("http://localhost:5001/api/auth/signup", {
+      const response = await fetch("https://club-members-server-production.up.railway.app/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firstName, lastName, email, password, adminKey }),
